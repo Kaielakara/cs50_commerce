@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import User
+from .models import *
 
 
 def index(request):
@@ -22,7 +22,7 @@ def login_view(request):
         # Check if authentication successful
         if user is not None:
             login(request, user)
-            return HttpResponseRedirect(reverse("index"))
+            return HttpResponseRedirect(reverse("auctions:index"))
         else:
             return render(request, "auctions/login.html", {
                 "message": "Invalid username and/or password."
@@ -33,7 +33,7 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
-    return HttpResponseRedirect(reverse("index"))
+    return HttpResponseRedirect(reverse("auctions:index"))
 
 
 def register(request):
@@ -58,6 +58,35 @@ def register(request):
                 "message": "Username already taken."
             })
         login(request, user)
-        return HttpResponseRedirect(reverse("index"))
+        return HttpResponseRedirect(reverse("auction:index"))
     else:
         return render(request, "auctions/register.html")
+
+def create(request):
+    if request.method == "POST":
+        title = request.POST["title"]
+        bid = request.POST["bid"]
+        description = request.POST["description"]
+        image = request.POST["image"]
+
+        if title and description and bid:
+            item = Listing(title = title, description = description, bid = bid, image = image)
+            item.save()
+            if item:
+                create_error(request, "Successful registered")
+            create_error(request, "Unsucessful")
+                
+
+        else:
+            return render(request, "auctions/create.html", {
+                "message" : "Please input Title,Description and bid"
+            })
+        
+    return render(request, "auctions/create.html")
+        
+    
+
+def create_error(request, str):
+    return render(request, "auctions/create.html", {
+        "message" : str
+    })

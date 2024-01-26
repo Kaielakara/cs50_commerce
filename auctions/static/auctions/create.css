@@ -1,0 +1,17 @@
+.content_main {
+  width: 95%;
+  margin: auto auto; }
+  .content_main form {
+    display: flex;
+    flex-direction: column;
+    gap: 9px; }
+    .content_main form div {
+      display: flex;
+      width: 100%;
+      justify-content: space-between; }
+
+@media (min-width: 600px) {
+  .content_main {
+    max-width: 550px; } }
+
+/*# sourceMappingURL=create.css.map */

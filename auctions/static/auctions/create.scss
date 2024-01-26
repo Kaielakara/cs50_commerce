@@ -1,0 +1,25 @@
+.content_main{
+    
+    width: 95%;
+    margin: auto auto;
+
+    form{
+        display: flex;
+        flex-direction: column;
+        gap: 9px;
+
+        div{
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+        }
+    } 
+    
+}
+
+
+@media (min-width : 600px) {
+    .content_main{
+        max-width: 550px;
+    }
+}

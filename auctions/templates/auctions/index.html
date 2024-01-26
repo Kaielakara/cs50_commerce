@@ -3,6 +3,7 @@
 {% block body %}
     <h2>Active Listings</h2>
 
-    {{request.user.}}
-    TODO
+    {% if request.user.is_authenticated %}
+    <a href="{% url "auctions:create" %}"> <p>Add a Listing</p> </a> 
+    {% endif %}
 {% endblock %}
