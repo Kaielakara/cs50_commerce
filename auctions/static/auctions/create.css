@@ -12,6 +12,11 @@
 
 @media (min-width: 600px) {
   .content_main {
-    max-width: 550px; } }
+    max-width: 550px; }
+
+  .listing {
+    max-width: 550px; }
+    .listing img {
+      width: 100%; } }
 
 /*# sourceMappingURL=create.css.map */

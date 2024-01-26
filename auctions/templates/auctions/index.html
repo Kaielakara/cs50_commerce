@@ -1,9 +1,18 @@
-{% extends "auctions/layout.html" %}
+{% extends 'auctions/layout.html' %}
 
 {% block body %}
-    <h2>Active Listings</h2>
+  <h2>Active Listings</h2>
 
-    {% if request.user.is_authenticated %}
-    <a href="{% url "auctions:create" %}"> <p>Add a Listing</p> </a> 
-    {% endif %}
+  {{ content|safe }}
+
+  {% if request.user.is_authenticated %}
+    {% for list in listing %}
+      <div class="listing">
+        {{ list.title }}
+        {{ list.description }}
+        {{ list.bid }}
+        <img src="{{ list.image.url }}" />
+      </div>
+    {% endfor %}
+  {% endif %}
 {% endblock %}

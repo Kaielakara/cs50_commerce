@@ -3,12 +3,16 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from .forms import *
 
 from .models import *
 
 
 def index(request):
-    return render(request, "auctions/index.html")
+    listing = Listing.objects.all()
+    return render(request, "auctions/index.html", {
+        "listing" : listing
+    })
 
 
 def login_view(request):
@@ -64,26 +68,22 @@ def register(request):
 
 def create(request):
     if request.method == "POST":
-        title = request.POST["title"]
-        bid = request.POST["bid"]
-        description = request.POST["description"]
-        image = request.POST["image"]
-
-        if title and description and bid:
-            item = Listing(title = title, description = description, bid = bid, image = image)
-            item.save()
-            if item:
-                create_error(request, "Successful registered")
-            create_error(request, "Unsucessful")
-                
-
+        form = NewForm(request.POST, request.FILES)
+        if form.is_valid():
+            title = form.cleaned_data['title']
+            description = form.cleaned_data['description']
+            number = form.cleaned_data['number']
+            image = form.cleaned_data['image']
+            form_comp = Listing(title = title, description = description, number = number, image = image)
+            form_comp.save()
+            create_error(request, "Successfully filled data")
         else:
             return render(request, "auctions/create.html", {
-                "message" : "Please input Title,Description and bid"
+                "form": NewForm()
             })
-        
-    return render(request, "auctions/create.html")
-        
+    return render(request, "auctions/create.html",{
+        "form" : NewForm()
+    })
     
 
 def create_error(request, str):

@@ -7,14 +7,9 @@
 {% block body %}
   <div class="content_main">
     <h2>What item do you wish to List</h2>
-    <form action=" {% url "auctions:create" %} " method="post">
+    <form action=" {% url "auctions:create" %} " method="post" >
       {% csrf_token %}
-      <input type="text" name="title" id="" placeholder="title" required />
-      <textarea name="description" id="" cols="30" rows="10" placeholder="description"></textarea>
-      <div>
-        <input type="number" name="bid" id="" required />
-        <input type="file" name="image" id="" />
-      </div>
+      {{form}}
       <input class="submit" type="submit" value="Submit" />
       {% if message %}
         {{message}}
