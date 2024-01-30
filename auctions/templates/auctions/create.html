@@ -7,12 +7,21 @@
 {% block body %}
   <div class="content_main">
     <h2>What item do you wish to List</h2>
-    <form action=" {% url "auctions:create" %} " method="post" >
+    <form action=" {% url 'auctions:create' %} " method="post">
       {% csrf_token %}
-      {{form}}
-      <input class="submit" type="submit" value="Submit" />
+      {{ form }}
+
+        <div class="form_two">
+          {{ form_two }}
+        </div>
+
+
+        <div class="submit">
+          <input class="submit-btn btn btn-primary" type="submit" value="Submit" />
+        </div>
+      
       {% if message %}
-        {{message}}
+        {{ message }}
       {% endif %}
     </form>
   </div>

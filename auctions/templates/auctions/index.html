@@ -7,11 +7,24 @@
 
   {% if request.user.is_authenticated %}
     {% for list in listing %}
-      <div class="listing">
-        {{ list.title }}
-        {{ list.description }}
-        {{ list.bid }}
-        <img src="{{ list.image.url }}" />
+      <div class="card my-3" style="width: 20rem; ">
+        <img src="{{ list.image.url }}" class="card-img-top" alt="..." />
+        <div class="card-body">
+          <h5 class="card-title">{{ list.title }}</h5>
+          <p class="card-text">{{ list.description }}.</p>
+          <p class="card-text">Price: ${{ list.bid }}</p>
+          <div class="card_form">
+            <form action="">
+              <input type="hidden" name="list_data" value="{{list.pk}}">
+              <a href="#" class="btn btn-secondary my-1 w-100">Add to Wishlist</a>
+            </form>
+            <form action="">
+              <input type="hidden" name="list_data" value="{{list.pk}}">
+              <a href="#" class="btn btn-success my-1 w-100">Bid</a>
+            </form>
+          </div>
+          
+        </div>
       </div>
     {% endfor %}
   {% endif %}

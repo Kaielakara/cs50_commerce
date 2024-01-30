@@ -1,14 +1,15 @@
 .content_main {
   width: 95%;
   margin: auto auto; }
-  .content_main form {
+  .content_main form .form-control {
+    margin-bottom: 8px; }
+  .content_main form .form_two {
     display: flex;
-    flex-direction: column;
-    gap: 9px; }
-    .content_main form div {
-      display: flex;
-      width: 100%;
-      justify-content: space-between; }
+    justify-content: space-between; }
+  .content_main form .form_two > * {
+    width: 37%; }
+  .content_main form .submit-btn {
+    width: 100%; }
 
 @media (min-width: 600px) {
   .content_main {
@@ -17,6 +18,11 @@
   .listing {
     max-width: 550px; }
     .listing img {
-      width: 100%; } }
+      width: 100%; }
+
+  .card_form {
+    width: 100%; }
+    .card_form form {
+      margin: auto 5px; } }
 
 /*# sourceMappingURL=create.css.map */

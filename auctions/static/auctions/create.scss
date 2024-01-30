@@ -4,14 +4,24 @@
     margin: auto auto;
 
     form{
-        display: flex;
-        flex-direction: column;
-        gap: 9px;
 
-        div{
+        .form-control{
+            margin-bottom: 8px;
+        }
+
+        .form_two{
             display: flex;
-            width: 100%;
             justify-content: space-between;
+
+            
+        }
+
+        .form_two > *{
+            width: 37%;
+        }
+        
+        .submit-btn{
+            width: 100%;
         }
     } 
     
@@ -29,4 +39,18 @@
             width: 100%;
         }
     }
+
+    .card_form{
+        width:100%;
+    
+        form{
+    
+            margin: auto 5px;
+
+            a{
+                
+            }
+        }
+    }
+    
 }

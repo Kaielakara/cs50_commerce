@@ -82,7 +82,8 @@ def create(request):
                 "form": NewForm()
             })
     return render(request, "auctions/create.html",{
-        "form" : NewForm()
+        "form" : NewForm(),
+        "form_two" : NewForm_two()
     })
     
 
