@@ -67,27 +67,26 @@ def register(request):
         return render(request, "auctions/register.html")
 
 def create(request):
+    # Once a request comes in with a post method
     if request.method == "POST":
-        form = NewForm(request.POST, request.FILES)
+        form = UploadForm(request.POST, request.FILES)
+
+        # you validate the form
         if form.is_valid():
-            title = form.cleaned_data['title']
-            description = form.cleaned_data['description']
-            number = form.cleaned_data['number']
-            image = form.cleaned_data['image']
-            form_comp = Listing(title = title, description = description, number = number, image = image)
-            form_comp.save()
-            create_error(request, "Successfully filled data")
+            form.save()
+            return create_error(request, "Successfully filled data")
+
         else:
-            return render(request, "auctions/create.html", {
-                "form": NewForm()
-            })
-    return render(request, "auctions/create.html",{
-        "form" : NewForm(),
-        "form_two" : NewForm_two()
-    })
+            return create_error(request, "Unsuccessful")          
+
+    else:
+        return render(request, "auctions/create.html", {
+            "form" : UploadForm(),
+        })
     
 
 def create_error(request, str):
     return render(request, "auctions/create.html", {
+        "form" : UploadForm(),
         "message" : str
     })

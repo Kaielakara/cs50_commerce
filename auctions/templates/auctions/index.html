@@ -14,7 +14,7 @@
           <p class="card-text">{{ list.description }}.</p>
           <p class="card-text">Price: ${{ list.bid }}</p>
           <div class="card_form">
-            <form action="">
+            <form action="{% url "auctions:watchlist" %}" method="post" >
               <input type="hidden" name="list_data" value="{{list.pk}}">
               <a href="#" class="btn btn-secondary my-1 w-100">Add to Wishlist</a>
             </form>

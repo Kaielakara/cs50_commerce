@@ -7,7 +7,7 @@ class User(AbstractUser):
 
 
 class Listing(models.Model):
-    title= models.CharField(max_length = 64)
+    title = models.CharField(max_length = 64)
     description = models.CharField(max_length=1000)
     bid = models.IntegerField()
     image = models.ImageField(upload_to="images/", blank=True)
