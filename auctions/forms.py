@@ -31,3 +31,5 @@ class UploadForm(ModelForm):
             'bid' : forms.NumberInput(attrs={"class" : "form-control form_number", "placeholder" : "Price"}),
             
         }
+
+

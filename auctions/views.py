@@ -84,6 +84,27 @@ def create(request):
             "form" : UploadForm(),
         })
     
+    
+def watchlist(request):
+    if request.method == "POST":
+        id = request.POST["list_data"]
+        wl = Listing.objects.get(pk = id)
+        new = WatchList(item = wl)
+        new.save()
+        return HttpResponseRedirect(reverse("auctions:index"))
+    else:
+        new_watchlist = []
+        wl = WatchList.objects.all()
+        for i in wl:
+            new_w = Listing.objects.filter(title = i)
+            new_watchlist.append(new_w[0])
+        # return HttpResponse(watchlist)
+        # new_watchlist = Listing.objects.filter(pk = watchlist.pk)
+        # new_watchlist.save()
+
+        return render(request, "auctions/watchlist.html", {
+            "watchlist" : new_watchlist
+        })
 
 def create_error(request, str):
     return render(request, "auctions/create.html", {

@@ -1,4 +1,4 @@
-{% extends 'auctions/layout.html' %}
+{% extends "auctions/layout.html" %}
 
 {% block body %}
   <h2>Active Listings</h2>
@@ -6,7 +6,7 @@
   {{ content|safe }}
 
   {% if request.user.is_authenticated %}
-    {% for list in listing %}
+    {% for list in watchlist %}
       <div class="card my-3" style="width: 20rem; ">
         <img src="{{ list.image.url }}" class="card-img-top" alt="..." />
         <div class="card-body">
@@ -17,7 +17,7 @@
             <form action="{% url "auctions:watchlist" %}" method="post" >
               {% csrf_token %}
               <input type="hidden" name="list_data" value="{{ list.pk }}">
-              <button class="btn btn-secondary my-1 w-100">Add to Wishlist</button>
+              <button class="btn btn-danger my-1 w-100"> Remove </button>
             </form>
             <form action="">
               {% csrf_token %}
@@ -29,5 +29,7 @@
         </div>
       </div>
     {% endfor %}
-  {% endif %}
+  {% endif %} 
+
+
 {% endblock %}
