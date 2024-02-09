@@ -21,7 +21,7 @@ class UploadForm(ModelForm):
             "title" : "",
             "description" : "",
             "bid" : "",
-            "image" : ""       
+            "image" : ""      
         }
 
 
@@ -29,7 +29,6 @@ class UploadForm(ModelForm):
             "title" : forms.TextInput(attrs={"class" : "form-control", "placeholder" : "Title"}),
             'description' : forms.Textarea(attrs={"class" : "form-control", "placeholder" : "Description"}),
             'bid' : forms.NumberInput(attrs={"class" : "form-control form_number", "placeholder" : "Price"}),
-            
+            "category" : forms.Select(attrs={"class" : "form-control"})
         }
-
 

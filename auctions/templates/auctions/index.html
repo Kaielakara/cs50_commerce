@@ -5,18 +5,20 @@
 
   {{ content|safe }}
 
-  {% if request.user.is_authenticated %}
+
     {% for list in listing %}
       <div class="card my-3" style="width: 20rem; ">
         <img src="{{ list.image.url }}" class="card-img-top" alt="..." />
         <div class="card-body">
           <h5 class="card-title">{{ list.title }}</h5>
           <p class="card-text">{{ list.description }}.</p>
+          <p class="card-text">Listed By: {{ list.user }}</p>
           <p class="card-text">Price: ${{ list.bid }}</p>
           <div class="card_form">
             <form action="{% url "auctions:watchlist" %}" method="post" >
               {% csrf_token %}
               <input type="hidden" name="list_data" value="{{ list.pk }}">
+              <input type="hidden" name="user_data" value = {{ request.user.pk }}>
               <button class="btn btn-secondary my-1 w-100">Add to Wishlist</button>
             </form>
             <form action="">
@@ -29,5 +31,4 @@
         </div>
       </div>
     {% endfor %}
-  {% endif %}
 {% endblock %}

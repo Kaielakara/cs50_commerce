@@ -16,6 +16,10 @@
         {{ form.bid }}
         {{ form.image }}
       </div>
+
+      {{form.category}}
+      
+        <input type="hidden" name="user" value="{{request.user}}">
       
 
       <div class="submit">

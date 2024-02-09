@@ -14,7 +14,7 @@
           <p class="card-text">{{ list.description }}.</p>
           <p class="card-text">Price: ${{ list.bid }}</p>
           <div class="card_form">
-            <form action="{% url "auctions:watchlist" %}" method="post" >
+            <form action="{% url "auctions:remove_watchlist" %}" method="post" >
               {% csrf_token %}
               <input type="hidden" name="list_data" value="{{ list.pk }}">
               <button class="btn btn-danger my-1 w-100"> Remove </button>

@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
@@ -44,7 +45,6 @@ def register(request):
     if request.method == "POST":
         username = request.POST["username"]
         email = request.POST["email"]
-
         # Ensure password matches confirmation
         password = request.POST["password"]
         confirmation = request.POST["confirmation"]
@@ -62,10 +62,12 @@ def register(request):
                 "message": "Username already taken."
             })
         login(request, user)
-        return HttpResponseRedirect(reverse("auction:index"))
+        return HttpResponseRedirect(reverse("auctions:index"))
     else:
         return render(request, "auctions/register.html")
 
+
+@login_required
 def create(request):
     # Once a request comes in with a post method
     if request.method == "POST":
@@ -77,34 +79,51 @@ def create(request):
             return create_error(request, "Successfully filled data")
 
         else:
-            return create_error(request, "Unsuccessful")          
+            return create_error(request, "Unsucessful")          
 
     else:
         return render(request, "auctions/create.html", {
             "form" : UploadForm(),
         })
+   
     
-    
+@login_required   
 def watchlist(request):
+    # once it is accessed view the post method alongside certain details
+    # you get the particular Listing object and save that object as a new Watchlist
+    # you are also redirected to your index page 
     if request.method == "POST":
         id = request.POST["list_data"]
+        user_data = request.POST["user_data"]
         wl = Listing.objects.get(pk = id)
-        new = WatchList(item = wl)
+        user_obj = User.objects.get(pk = user_data)
+        new = WatchList(item = wl, person = user_obj)
         new.save()
         return HttpResponseRedirect(reverse("auctions:index"))
+    
+    # if it is accessed through get you create an empty list and you also try to query the entire model
+    # You then loop through each object of the Wachlist filtering each Listing to find out which has a
+    # title like the current index, and then you append the first index of the queryset and you display the list 
     else:
         new_watchlist = []
-        wl = WatchList.objects.all()
+        wl = WatchList.objects.filter(person = request.user.pk)
         for i in wl:
             new_w = Listing.objects.filter(title = i)
             new_watchlist.append(new_w[0])
-        # return HttpResponse(watchlist)
-        # new_watchlist = Listing.objects.filter(pk = watchlist.pk)
-        # new_watchlist.save()
 
         return render(request, "auctions/watchlist.html", {
             "watchlist" : new_watchlist
         })
+
+@login_required   
+def remove_watchlist(request):
+    if request.method == "POST":
+        new_id = request.POST['list_data']
+        list = Listing.objects.get(pk = new_id)
+        wl = WatchList.objects.get(item = list).delete()
+        return HttpResponseRedirect(reverse("auctions:watchlist"))
+
+
 
 def create_error(request, str):
     return render(request, "auctions/create.html", {
