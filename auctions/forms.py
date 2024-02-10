@@ -32,3 +32,10 @@ class UploadForm(ModelForm):
             "category" : forms.Select(attrs={"class" : "form-control"})
         }
 
+class BidForm(ModelForm):
+    class Meta():
+        model = Listing
+        fields = ["bid"]
+        widgets = {
+            "bid" : forms.NumberInput(attrs={"class" : "form-control form_number"})
+        }

@@ -123,6 +123,18 @@ def remove_watchlist(request):
         wl = WatchList.objects.get(item = list).delete()
         return HttpResponseRedirect(reverse("auctions:watchlist"))
 
+@login_required
+def product_bid(request):
+    if request.method == "POST":
+        form = BidForm()
+        id = request.POST["list_data"]
+        list = Listing.objects.get(pk = id)
+        return render(request, "auctions/product.html", {
+            "list" : list,
+            "form" : form
+        })
+    else:
+        return HttpResponseRedirect(reverse("auctions:index"))
 
 
 def create_error(request, str):

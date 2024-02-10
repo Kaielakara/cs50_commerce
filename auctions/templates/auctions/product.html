@@ -1,0 +1,27 @@
+{% extends "auctions/layout.html" %}
+{% block body %}
+
+  <div class="card mb-3" style="max-width: 540px;">
+    <div class="row g-0">
+      <div class="col-md-4">
+        <img src=" {{list.image.url}} " class="img-fluid rounded-start" alt="...">
+      </div>
+      <div class="col-md-8 text-bg-info">
+        <div class="card-body">
+          <h5 class="card-title"> {{list.title}} </h5>
+          <p class="card-text"> {{list.description}} .</p>
+          <p class="card-text"><small class="text-body-secondary"> {{list.bid}} </small></p>
+          <form action="" method="post">
+            <input type="hidden" name="bid_data" value=" {{list.bid}} ">
+            {{ form.bid }}
+            <input class="btn btn-success my-2" type="submit" value="Place Bid">
+          </form>
+          <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+{% endblock  %}
