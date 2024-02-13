@@ -1,3 +1,5 @@
+
+
 .content_main{
     
     width: 95%;
@@ -24,9 +26,18 @@
             width: 100%;
         }
     } 
+
+    
     
 }
 
+.product_card{
+        max-width: 85%;
+        background-color: red;
+        img{
+            width: 100%;
+        }
+    }
 
 @media (min-width : 600px) {
     .content_main{
@@ -42,7 +53,21 @@
 
     .card_form{
         width:100%;
+    }
     
+    .product_card{
+        max-width: 450px;
+        background-color: red;
+        img{
+            width: 100%;
+        }
+    }
+    
+}
 
-    
+@media (min-width : 900px) {
+    .product_card{
+        max-width: 650px;
+        
+    }
 }

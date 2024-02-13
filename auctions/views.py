@@ -124,6 +124,17 @@ def remove_watchlist(request):
         return HttpResponseRedirect(reverse("auctions:watchlist"))
 
 
+@login_required
+def product(request, name):
+    list = Listing.objects.get(title = name)
+    return render(request, "auctions/product.html", {
+        "list": list
+    })
+
+
+@login_required
+def product_bid(request):
+    pass
 
 def create_error(request, str):
     return render(request, "auctions/create.html", {

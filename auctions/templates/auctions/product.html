@@ -1,0 +1,19 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+<div class="product_card">
+  <div class="card mb-3 w-100">
+    <img src="{{list.image.url}}" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">{{list.title}}</h5>
+      <p class="card-text">{{list.description}}.</p>
+      <p class="card-text"><small class="text-body-secondary">{{list.user}}</small></p>
+      <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+    </div>
+  </div> 
+</div>
+
+ 
+
+{% endblock  %}
