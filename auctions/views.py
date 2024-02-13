@@ -10,7 +10,7 @@ from .models import *
 
 
 def index(request):
-    listing = Listing.objects.all()
+    listing = Listing.objects.filter(active = False)
     return render(request, "auctions/index.html", {
         "listing" : listing
     })
@@ -127,15 +127,42 @@ def remove_watchlist(request):
 @login_required
 def product(request, name):
     list = Listing.objects.get(title = name)
+    form = BidForm()
     return render(request, "auctions/product.html", {
-        "list": list
+        "list" : list,
+        "form" : form
     })
 
 
 @login_required
 def product_bid(request):
-    pass
+    if request.method == "POST":
+        bid = request.POST['bid']
+        list_id = request.POST['list_data']
+        list_user = request.POST['list_user']
+        list = Listing.objects.get(pk = list_id)
+        if list.bid >= int(bid):
+            return HttpResponseRedirect(reverse("auctions:product", args = [list.title]))
+        else:
+            list.bid = bid
+            list.bidder = list_user
+            list.save()
+            return render(request, "auctions/product.html", {
+                "message" : "Successfully placed a Bid"
+            })
+        
 
+@login_required
+def product_close(request):
+    if request.method == "POST":
+        list_id = request.POST['list_data']
+        list = Listing.objects.get(pk = list_id)
+        list.active = True
+        list.save()
+        return render(request, "auctions/product.html", {
+            "message" : "Successfully Closed the Bid"
+        })
+    
 def create_error(request, str):
     return render(request, "auctions/create.html", {
         "form" : UploadForm(),

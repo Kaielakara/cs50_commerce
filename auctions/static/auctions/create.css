@@ -11,11 +11,20 @@
   .content_main form .submit-btn {
     width: 100%; }
 
+.message {
+  margin: auto auto;
+  font-size: 1.7rem; }
+
 .product_card {
   max-width: 85%;
   background-color: red; }
   .product_card img {
     width: 100%; }
+  .product_card form {
+    display: flex;
+    flex-direction: column;
+    width: 37%;
+    gap: .3em; }
 
 @media (min-width: 600px) {
   .content_main {
@@ -36,9 +45,6 @@
       width: 100%; } }
 @media (min-width: 900px) {
   .product_card {
-    max-width: 650px;
-    background-color: red; }
-    .product_card img {
-      width: 100%; } }
+    max-width: 650px; } }
 
 /*# sourceMappingURL=create.css.map */

@@ -22,7 +22,10 @@ class Listing(models.Model):
     category = models.CharField(choices = choice_category, max_length = 50)
     bid = models.IntegerField()
     user = models.CharField(max_length = 64)
+    active = models.BooleanField(default = False)
+    bidder = models.CharField(max_length = 64, blank = True)
     image = models.ImageField(upload_to="images/", blank=True)
+
 
     def __str__(self):
         return f"{self.title}"

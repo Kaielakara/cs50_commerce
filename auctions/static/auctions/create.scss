@@ -31,11 +31,24 @@
     
 }
 
+
+.message{
+    margin: auto auto;
+    font-size: 1.7rem;
+}
+
 .product_card{
         max-width: 85%;
         background-color: red;
         img{
             width: 100%;
+        }
+
+        form{
+            display: flex;
+            flex-direction: column;
+            width: 37%;
+            gap:.3em;
         }
     }
 
