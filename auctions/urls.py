@@ -14,5 +14,6 @@ urlpatterns = [
     path("remove/watchlist", views.remove_watchlist, name='remove_watchlist' ),
     path("product/bid", views.product_bid, name = "product_bid"),
     path("product/close", views.product_close, name = "product_close"),
+    path("product/comment", views.product_comment, name = "product_comment"),
     path("product/<str:name>", views.product, name="product") 
 ]

@@ -124,15 +124,18 @@ def remove_watchlist(request):
         return HttpResponseRedirect(reverse("auctions:watchlist"))
 
 
-@login_required
+
 def product(request, name):
     list = Listing.objects.get(title = name)
+    comm = Comment.objects.filter(item = list.pk)
     form = BidForm()
+    comment = CommentForm()
     return render(request, "auctions/product.html", {
         "list" : list,
-        "form" : form
+        "form" : form,
+        "comment" : comment,
+        "comments" : comm
     })
-
 
 @login_required
 def product_bid(request):
@@ -162,6 +165,19 @@ def product_close(request):
         return render(request, "auctions/product.html", {
             "message" : "Successfully Closed the Bid"
         })
+    
+@login_required
+def product_comment(request):
+    if request.method == "POST":
+        list_id = request.POST['list_data']
+        list_user = request.POST['list_user']
+        comment = request.POST['comment']
+        list = Listing.objects.get(pk = list_id)
+        user = User.objects.get(pk = list_user)
+        comm = Comment(item = list, commenter = user, comment = comment)
+        comm.save()
+        return HttpResponseRedirect(reverse("auctions:product" , args=[list.title]))
+
     
 def create_error(request, str):
     return render(request, "auctions/create.html", {

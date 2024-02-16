@@ -16,8 +16,7 @@
   font-size: 1.7rem; }
 
 .product_card {
-  max-width: 85%;
-  background-color: red; }
+  max-width: 85%; }
   .product_card img {
     width: 100%; }
   .product_card form {
@@ -39,8 +38,7 @@
     width: 100%; }
 
   .product_card {
-    max-width: 450px;
-    background-color: red; }
+    max-width: 450px; }
     .product_card img {
       width: 100%; } }
 @media (min-width: 900px) {

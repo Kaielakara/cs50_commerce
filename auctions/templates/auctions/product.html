@@ -1,47 +1,65 @@
-{% extends "auctions/layout.html" %}
+{% extends 'auctions/layout.html' %}
 
 {% block body %}
+  {% if message %}
+    <div class="message">{{ message }}</div>
+  {% else %}
+    <div class="product_card">
+      <div class="card mb-3 w-100">
+        <img src="{{ list.image.url }}" class="card-img-top" alt="..." />
+        <div class="card-body">
+          <h5 class="card-title">{{ list.title }}</h5>
+          <p class="card-text">{{ list.description }}.</p>
+          <p class="card-text">
+            <small class="text-body-secondary">By: {{ list.user }}</small>
+          </p>
+          <p class="card-text">
+            <small class="text-body-secondary">Min Bid : {{ list.bid }}</small>
+          </p>
+          <p class="card-text">
+            <small class="text-body-secondary">Last updated 3 mins ago</small>
+          </p>
 
-{% if message %}
-
-<div class="message">
-  {{message}}
-</div>
-  
-{% else %}
-<div class="product_card">
-  <div class="card mb-3 w-100">
-    <img src="{{list.image.url}}" class="card-img-top" alt="...">
-    <div class="card-body">
-      <h5 class="card-title">{{list.title}}</h5>
-      <p class="card-text">{{list.description}}.</p>
-      <p class="card-text"><small class="text-body-secondary">By: {{list.user}}</small></p>
-      <p class="card-text"><small class="text-body-secondary">Min Bid : {{list.bid}} </small></p>
-      <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
-      
-      <!--If a user clicks on a product which he uploaded himself it shows a different form from one he did not upload-->
-      {% if request.user.username == list.user %}
-        <form action="{% url "auctions:product_close" %}" method="post">
-          {% csrf_token %}
-          <input type="hidden" name="list_data" value="{{list.pk}}">
-          <input class="btn btn-danger" type="submit" value="Close Bid">
-        </form>
-      {% else %}
-        <form action=" {% url "auctions:product_bid" %} " method="post">
-          {% csrf_token %}
-          <input type="hidden" name="list_data" value="{{list.pk}}">
-          <input type="hidden" name="list_user" value="{{request.user}}">
-          {{form.bid}}
-          <input class="btn btn-success" type="submit" value="Place bid">
-        </form>
-      {% endif %}
-      
+          <!-- If a user clicks on a product which he uploaded himself it shows a different form from one he did not upload -->
+          {% if request.user.username == list.user %}
+            <form action="{% url 'auctions:product_close' %}" method="post">
+              {% csrf_token %}
+              <input type="hidden" name="list_data" value="{{ list.pk }}" />
+              <input class="btn btn-danger" type="submit" value="Close Bid" />
+            </form>
+          {% else %}
+            <form action=" {% url 'auctions:product_bid' %} " method="post">
+              {% csrf_token %}
+              <input type="hidden" name="list_data" value="{{ list.pk }}" />
+              <input type="hidden" name="list_user" value="{{ request.user }}" />
+              {{ form.bid }}
+              <input class="btn btn-success mb-3" type="submit" value="Place bid" />
+            </form>
+        </div>
+      </div>
     </div>
-  </div> 
-</div>
+            <form action="{% url 'auctions:product_comment' %}" method="post">
+              {% csrf_token %}
+              <input type="hidden" name="list_data" value="{{ list.pk }}" />
+              <input type="hidden" name="list_user" value="{{ request.user.id }}" />
+              {{ comment.comment }}
+              <input class="btn btn-secondary" type="submit" value="Comment" />
+            </form>
+          {% endif %}
+        
 
-{% endif %}
-
- 
-
-{% endblock  %}
+    {% for comm in comments %}
+      <div class="card">
+        <div class="card-header">{{ comm.commenter }}</div>
+        <div class="card-body">
+          <blockquote class="blockquote mb-0">
+            <p> {{comm.comment}} </p>
+            <footer class="blockquote-footer">
+              <cite title="Source Title"> {{comm.commenter}} </cite>
+            </footer>
+          </blockquote>
+        </div>
+      </div>
+    {% endfor %}
+  {% endif %}
+{% endblock %}
